@@ -1,0 +1,5 @@
+name: Entity View Builder
+type: module
+description: Provides plugin type for extending entity view builder per bundle.
+package: plugin
+core: 8.x

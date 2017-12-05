@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Implements hooks.
+ */
+
+/**
+ * Implements hook_entity_type_alter().
+ *
+ * Replace the default view builder controller with our form that will
+ * delegate all methods to alter plugins with the specific entity type.
+ */
+function entity_view_builder_entity_type_alter(array &$entity_types) {
+  // Add the custom view builder handler for node entity types.
+  if (isset($entity_types['node'])) {
+    $node_entity_type = $entity_types['node'];
+    $node_entity_type->setHandlerClass('view_builder', 'Drupal\entity_view_builder\ViewBuilder\NodeViewBuilder');
+  }
+
+  // Add the custom view builder handler for paragraph entity types.
+  if (isset($entity_types['paragraph'])) {
+    $paragraph_entity_type = $entity_types['paragraph'];
+    $paragraph_entity_type->setHandlerClass('view_builder', 'Drupal\entity_view_builder\ViewBuilder\ParagraphViewBuilder');
+  }
+}
