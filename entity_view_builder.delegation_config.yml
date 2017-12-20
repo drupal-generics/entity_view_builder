@@ -1,0 +1,9 @@
+node_view_builder:
+  entity_type_id: node
+  class: Drupal\entity_view_builder\ViewBuilder\NodeViewBuilder
+  priority: 1
+
+paragraph_view_builder:
+  entity_type_id: paragraph
+  class: Drupal\entity_view_builder\ViewBuilder\ParagraphViewBuilder
+  priority: 1
