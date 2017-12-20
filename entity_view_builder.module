@@ -14,8 +14,7 @@ use Drupal\entity_view_builder\EntityViewBuilderConfigManager;
  * that will delegate the build method.
  */
 function entity_view_builder_entity_type_alter(array &$entity_types) {
-  $container = \Drupal::getContainer();
-  $config_manager = $container->get('config.manager.entity_view_builder');
+  $config_manager = \Drupal::service('config.manager.entity_view_builder');
 
   // Get configuration from all .delegation_config.yml files.
   $config = $config_manager->getConfiguration();
@@ -35,11 +34,7 @@ function entity_view_builder_entity_type_alter(array &$entity_types) {
   foreach ($view_builders as $entity_type_id => &$list) {
     // Sort the Entity View Builders, decreasingly,  based on the priority;
     usort($list, function($a, $b) {
-      if ($a['priority'] == $b['priority']) {
-        return 0;
-      }
-
-      return ($a['priority'] < $b['priority']) ? 1 : -1;
+      return $b['priority'] - $a['priority'];
     });
 
     if(isset($entity_types[$entity_type_id])) {

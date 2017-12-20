@@ -74,19 +74,13 @@ class EntityViewBuilderConfigManager {
    * Removes the configurations that don't have the required parameters.
    *
    * @param $list
-   *   List of Entity View Builders overrides.
+   * List of Entity View Builders configurations.
    */
   private function sanitizeList(&$list) {
     foreach ($list as &$module) {
-      foreach ($module as $id => $config) {
-        if (!array_key_exists('entity_type_id', $config) || !array_key_exists('class', $config) || !array_key_exists('priority', $config)) {
-          unset($module[$id]);
-        }
-
-        elseif (!isset($config['entity_type_id']) || !isset($config['class']) || !isset($config['priority'])) {
-          unset($module[$id]);
-        }
-      }
+      $module = array_filter($module, function (&$element) {
+        return isset($element['entity_type_id']) && isset($element['class']) && isset($element['priority']);
+      });
     }
   }
 
